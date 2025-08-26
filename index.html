@@ -15,6 +15,15 @@
             .no-print {
                 display: none;
             }
+            .printable-input {
+                border: 1px solid #d1d5db !important;
+                 -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+            }
+             .line-total, #grand-total {
+                color: black !important;
+            }
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -24,17 +33,27 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .qty-box {
-            width: 60px;
+        .qty-input {
+            width: 70px;
             height: 40px;
             border: 1px solid #d1d5db;
             border-radius: 0.375rem;
+            text-align: center;
+        }
+        /* Hide number input arrows */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+          -webkit-appearance: none; 
+          margin: 0; 
+        }
+        input[type=number] {
+          -moz-appearance: textfield;
         }
     </style>
 </head>
 <body class="bg-gray-100">
 
-    <div class="container mx-auto max-w-4xl p-4 sm:p-8 bg-white my-8 shadow-lg rounded-lg">
+    <div class="container mx-auto max-w-5xl p-4 sm:p-8 bg-white my-8 shadow-lg rounded-lg">
         
         <!-- Header -->
         <header class="text-center mb-10 border-b pb-6">
@@ -52,76 +71,95 @@
         <main>
             <h2 class="text-2xl font-bold text-gray-700 mb-6 text-center">Wholesale Catalog & Order Sheet</h2>
             
-            <!-- Wholesale Master Case Section -->
-            <section class="mb-12">
-                <h3 class="text-xl font-semibold text-gray-800 bg-gray-100 p-3 rounded-t-lg border-b-2 border-purple-500">Wholesale Master Case (Assortment Pack)</h3>
-                <div class="p-4">
-                    <div class="grid grid-cols-5 items-center gap-4 py-3">
-                        <div class="col-span-3">
-                            <p class="font-semibold text-gray-800">Wholesale Master Case</p>
-                            <p class="text-sm text-gray-500 mt-2">
-                                An assortment containing one of each Wholesale Case SKU:
-                                <ul class="list-disc list-inside ml-2 mt-1 text-xs">
-                                    <li>Wholesale Case - Trial Pack (10 units)</li>
-                                    <li>Wholesale Case - One-Time (3 Pills) (10 units)</li>
-                                    <li>Wholesale Case - One-Time (10 Pills) (10 units)</li>
-                                    <li>Wholesale Case - One-Time (15 Pills) (10 units)</li>
-                                    <li>Wholesale Case - One-Time (30 Pills) (10 units)</li>
-                                </ul>
-                            </p>
-                        </div>
-                        <p class="text-gray-700 font-medium text-right">$1,726.80</p>
-                        <div class="qty-box ml-auto"></div>
-                    </div>
-                </div>
-            </section>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left" id="order-table">
+                    <thead>
+                        <tr class="border-b bg-gray-50">
+                            <th class="p-3 font-semibold text-gray-600">Product</th>
+                            <th class="p-3 font-semibold text-gray-600 text-right">Price/Case</th>
+                            <th class="p-3 font-semibold text-gray-600 text-center no-print">Quantity</th>
+                            <th class="p-3 font-semibold text-gray-600 text-right">Line Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Wholesale Master Case Section -->
+                        <tr class="product-row border-b" data-price="1726.80">
+                            <td class="p-3">
+                                <p class="font-bold text-gray-800">Wholesale Master Case</p>
+                                <p class="text-sm text-gray-500 mt-1">The ideal starter pack. An assortment containing one of each Wholesale Case SKU, perfect for showcasing the entire product line.</p>
+                            </td>
+                            <td class="p-3 text-right font-medium text-gray-700">$1,726.80</td>
+                            <td class="p-3 text-center no-print">
+                                <input type="number" min="0" class="qty-input printable-input" placeholder="0">
+                            </td>
+                            <td class="p-3 text-right font-bold text-gray-800 line-total">$0.00</td>
+                        </tr>
 
-            <!-- Individual Wholesale Cases Section -->
-            <section class="mb-8">
-                <h3 class="text-xl font-semibold text-gray-800 bg-gray-100 p-3 rounded-t-lg border-b-2 border-indigo-500">Individual Wholesale Cases (A La Carte)</h3>
-                <div class="space-y-4 p-4">
-                    <div class="grid grid-cols-5 items-center gap-4 py-3 border-b">
-                        <div class="col-span-3">
-                            <p class="font-semibold text-gray-800">Wholesale Case - Trial Pack (3 Pills)</p>
-                            <p class="text-sm text-gray-500">Contains 10 units. Packaging reflects $14.95 trial price.</p>
-                        </div>
-                        <p class="text-gray-700 font-medium text-right">$129.50</p>
-                        <div class="qty-box ml-auto"></div>
-                    </div>
-                    <div class="grid grid-cols-5 items-center gap-4 py-3 border-b">
-                        <div class="col-span-3">
-                            <p class="font-semibold text-gray-800">Wholesale Case - One-Time (3 Pills)</p>
-                            <p class="text-sm text-gray-500">Contains 10 units.</p>
-                        </div>
-                        <p class="text-gray-700 font-medium text-right">$109.80</p>
-                        <div class="qty-box ml-auto"></div>
-                    </div>
-                    <div class="grid grid-cols-5 items-center gap-4 py-3 border-b">
-                        <div class="col-span-3">
-                            <p class="font-semibold text-gray-800">Wholesale Case - One-Time (10 Pills)</p>
-                             <p class="text-sm text-gray-500">Contains 10 units.</p>
-                        </div>
-                        <p class="text-gray-700 font-medium text-right">$287.50</p>
-                        <div class="qty-box ml-auto"></div>
-                    </div>
-                    <div class="grid grid-cols-5 items-center gap-4 py-3 border-b">
-                        <div class="col-span-3">
-                            <p class="font-semibold text-gray-800">Wholesale Case - One-Time (15 Pills)</p>
-                             <p class="text-sm text-gray-500">Contains 10 units.</p>
-                        </div>
-                        <p class="text-gray-700 font-medium text-right">$412.50</p>
-                        <div class="qty-box ml-auto"></div>
-                    </div>
-                    <div class="grid grid-cols-5 items-center gap-4 py-3 border-b">
-                        <div class="col-span-3">
-                            <p class="font-semibold text-gray-800">Wholesale Case - One-Time (30 Pills)</p>
-                             <p class="text-sm text-gray-500">Contains 10 units.</p>
-                        </div>
-                        <p class="text-gray-700 font-medium text-right">$787.50</p>
-                        <div class="qty-box ml-auto"></div>
-                    </div>
-                </div>
-            </section>
+                        <!-- Individual Wholesale Cases Section -->
+                        <tr class="product-row border-b" data-price="129.50">
+                            <td class="p-3">
+                                <p class="font-semibold text-gray-800">Wholesale Case - Trial Pack (3 Pills)</p>
+                                <p class="text-sm text-gray-500 mt-1">Targets new customers. Contains 10 retail units with packaging that reflects the $14.95 trial price.</p>
+                            </td>
+                            <td class="p-3 text-right font-medium text-gray-700">$129.50</td>
+                            <td class="p-3 text-center no-print">
+                                <input type="number" min="0" class="qty-input printable-input" placeholder="0">
+                            </td>
+                            <td class="p-3 text-right font-bold text-gray-800 line-total">$0.00</td>
+                        </tr>
+                        <tr class="product-row border-b" data-price="109.80">
+                            <td class="p-3">
+                                <p class="font-semibold text-gray-800">Wholesale Case - One-Time (3 Pills)</p>
+                                <p class="text-sm text-gray-500 mt-1">Entry-level option for regular purchase. Contains 10 retail units.</p>
+                            </td>
+                            <td class="p-3 text-right font-medium text-gray-700">$109.80</td>
+                            <td class="p-3 text-center no-print">
+                                <input type="number" min="0" class="qty-input printable-input" placeholder="0">
+                            </td>
+                            <td class="p-3 text-right font-bold text-gray-800 line-total">$0.00</td>
+                        </tr>
+                        <tr class="product-row border-b" data-price="287.50">
+                            <td class="p-3">
+                                <p class="font-semibold text-gray-800">Wholesale Case - One-Time (10 Pills)</p>
+                                <p class="text-sm text-gray-500 mt-1">Best-seller for committed users. Contains 10 retail units.</p>
+                            </td>
+                            <td class="p-3 text-right font-medium text-gray-700">$287.50</td>
+                            <td class="p-3 text-center no-print">
+                                <input type="number" min="0" class="qty-input printable-input" placeholder="0">
+                            </td>
+                            <td class="p-3 text-right font-bold text-gray-800 line-total">$0.00</td>
+                        </tr>
+                        <tr class="product-row border-b" data-price="412.50">
+                            <td class="p-3">
+                                <p class="font-semibold text-gray-800">Wholesale Case - One-Time (15 Pills)</p>
+                                <p class="text-sm text-gray-500 mt-1">Value size for experienced customers. Contains 10 retail units.</p>
+                            </td>
+                            <td class="p-3 text-right font-medium text-gray-700">$412.50</td>
+                            <td class="p-3 text-center no-print">
+                                <input type="number" min="0" class="qty-input printable-input" placeholder="0">
+                            </td>
+                            <td class="p-3 text-right font-bold text-gray-800 line-total">$0.00</td>
+                        </tr>
+                        <tr class="product-row" data-price="787.50">
+                            <td class="p-3">
+                                <p class="font-semibold text-gray-800">Wholesale Case - One-Time (30 Pills)</p>
+                                <p class="text-sm text-gray-500 mt-1">Bulk option for dedicated users. Contains 10 retail units.</p>
+                            </td>
+                            <td class="p-3 text-right font-medium text-gray-700">$787.50</td>
+                            <td class="p-3 text-center no-print">
+                                <input type="number" min="0" class="qty-input printable-input" placeholder="0">
+                            </td>
+                            <td class="p-3 text-right font-bold text-gray-800 line-total">$0.00</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="border-t-2">
+                            <td colspan="3" class="p-3 text-right font-bold text-xl text-gray-800">Grand Total</td>
+                            <td id="grand-total" class="p-3 text-right font-bold text-xl text-gray-800">$0.00</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
             
             <!-- Order Details -->
             <section class="mt-12">
@@ -150,10 +188,53 @@
             <div class="text-xs text-gray-500 bg-yellow-50 border border-yellow-200 p-3 rounded-lg mb-4">
                 <strong>Important Safety Notice:</strong> Overconsumption may cause intense visuals and hallucinations. Intended for adults 21+. Use responsibly. Statements not evaluated by the FDA. This product is not intended to diagnose, treat, cure, or prevent any disease.
             </div>
-            <p class="text-gray-600">For more information or to order online, visit: <strong>microdos2.github.io</strong></p>
+            <p class="text-gray-600">For more information or to order online, visit: <strong><a href="https://microdos2.github.io/SINGLE-LOCATION/" target="_blank" class="text-indigo-600 hover:underline">https://microdos2.github.io/SINGLE-LOCATION/</a></strong></p>
         </footer>
 
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const orderTable = document.getElementById('order-table');
+            const grandTotalCell = document.getElementById('grand-total');
+            const productRows = orderTable.querySelectorAll('.product-row');
+
+            function updateTotals() {
+                let grandTotal = 0;
+
+                productRows.forEach(row => {
+                    const price = parseFloat(row.dataset.price);
+                    const quantityInput = row.querySelector('.qty-input');
+                    const lineTotalCell = row.querySelector('.line-total');
+                    
+                    const quantity = parseInt(quantityInput.value) || 0;
+                    
+                    const lineTotal = price * quantity;
+                    grandTotal += lineTotal;
+
+                    lineTotalCell.textContent = formatCurrency(lineTotal);
+                });
+
+                grandTotalCell.textContent = formatCurrency(grandTotal);
+            }
+
+            function formatCurrency(amount) {
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD'
+                }).format(amount);
+            }
+
+            orderTable.addEventListener('input', function(event) {
+                if (event.target.classList.contains('qty-input')) {
+                    updateTotals();
+                }
+            });
+
+            // Initial calculation on page load
+            updateTotals();
+        });
+    </script>
 
 </body>
 </html>
