@@ -94,6 +94,23 @@
     /* Study link style */
   a.study{ color: var(--accent-1); text-decoration: none; }
   a.study:hover{ text-decoration: underline; }
+  /* Stories button */
+  .btn{ 
+    display:inline-flex; align-items:center; justify-content:center;
+    padding: 10px 14px; border-radius:12px; font-weight:800; letter-spacing:.04em;
+    color:#0b1220; background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+    border: 1px solid #3a5390; text-decoration:none; box-shadow: 0 6px 20px rgba(0,0,0,.25);
+  }
+  .btn:hover{ filter: brightness(1.06); text-decoration:none }
+  .btn:focus{ outline: 2px solid #a7d3ff; outline-offset: 2px }
+  .btn--stories{ text-transform: uppercase; }
+
+  /* Footer QR centering */
+  .footer-qr{ grid-column: 1 / -1; display:grid; place-items:center; margin-top: 8px }
+  /* Sub-panel used inside other panels */
+  .panel--sub{ margin-top: 12px; padding: 12px 14px; border-radius: 14px }
+  /* Utility: make a panel span both grid columns */
+  .full-span{ grid-column: 1 / -1 }
 </style>
 </head>
 <body>
@@ -108,8 +125,12 @@
         <p>Pharmaceutical‑grade microdosing tablet formulated for precision, rapid onset, and high quality; ideal for enhancing focus, creativity, and well‑being.</p>
         <p class="cta"><u>Explore microdosing with Metocin (4‑HO‑MET)</u></p>
       </div>
-      <div class="hero">
-        <img src="/catalog-order-page/ASSETS/microDOS2pill.png" alt="microDOS(2) pill" />
+      <div class="hero" id="hero">
+        <!-- HERO IMAGE START: path /catalog-order-page/ASSETS/microDOS2pill.png -->
+        <a id="hero-image-link" href="/catalog-order-page/ASSETS/microDOS2pill.png" target="_blank" rel="noopener">
+          <img id="hero-image" src="/catalog-order-page/ASSETS/microDOS2pill.png" alt="microDOS(2) pill" />
+        </a>
+        <!-- HERO IMAGE END -->
       </div>
     </header>
 
@@ -153,7 +174,24 @@
         <p><b>Lena:</b> Breakthrough; “Creativity increased.”</p>
         <p><b>Banyu:</b> Cleared block; “Confidence renewed.”</p>
         <p><b>Mateo:</b> Reignited passion; “Light found.”</p>
-        <p class="muted" style="margin-top:6px">Read more user stories (QR).</p>
+        <!-- Stories button (left-aligned) -->
+        <p style="margin-top:10px">
+          <a class="btn btn--stories" href="https://microdos2.github.io/SINGLE-LOCATION/UserStoriespage.html" target="_blank" rel="noopener" aria-label="Open Stories: Read full user experiences">
+            Stories — Read full user experiences
+          </a>
+        </p>
+
+        <!-- Scientific Studies moved here as a sub-panel -->
+        <section class="panel panel--sub" aria-label="Scientific Studies">
+          <h3>Scientific Studies</h3>
+          <p>• <a class="study" href="https://www.nature.com/articles/s41598-021-01811-4" target="_blank" rel="noopener">Scientific Reports (2021): Reduced anxiety.</a></p>
+          <p>• <a class="study" href="https://harmreductionjournal.biomedcentral.com/articles/10.1186/s12954-019-0308-4" target="_blank" rel="noopener">Harm Reduction (2019): Mood benefits.</a></p>
+          <p>• <a class="study" href="https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0211023" target="_blank" rel="noopener">PLOS One (2019): Well‑being gains.</a></p>
+          <p>• <a class="study" href="https://www.nature.com/articles/s41598-022-14512-3" target="_blank" rel="noopener">Scientific Reports (2022): Mood improvements.</a></p>
+          <p class="muted">Full list available on site (QR at bottom).</p>
+        </section>
+
+        <!-- QR moved to footer bottom center per request -->
       </section>
 
       <section class="pricing">
@@ -217,23 +255,17 @@
     </div>
 
     <div class="row" style="margin-top: 18px">
-      <section class="panel">
-        <h3>Scientific Studies</h3>
-        <p>• <a class="study" href="https://www.nature.com/articles/s41598-021-01811-4" target="_blank" rel="noopener">Scientific Reports (2021): Reduced anxiety.</a></p>
-        <p>• <a class="study" href="https://harmreductionjournal.biomedcentral.com/articles/10.1186/s12954-019-0308-4" target="_blank" rel="noopener">Harm Reduction (2019): Mood benefits.</a></p>
-        <p>• <a class="study" href="https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0211023" target="_blank" rel="noopener">PLOS One (2019): Well‑being gains.</a></p>
-        <p>• <a class="study" href="https://www.nature.com/articles/s41598-022-14512-3" target="_blank" rel="noopener">Scientific Reports (2022): Mood improvements.</a></p>
-        <p class="muted">Full list available on site (QR).</p>
-      </section>
-      <section class="panel">
+      <section class="panel full-span">
         <h3>Legal & Safety Notice</h3>
         <p class="legal">⚠️ Overconsumption risks hallucinations. Must be twenty‑one years of age or older. Not evaluated by the Food and Drug Administration. Not intended to diagnose, treat, cure, or prevent any disease.</p>
       </section>
     </div>
 
     <footer>
-      <div class="legal">Back Page / Call to Action • Learn more, stories, and details via the QR code.</div>
-      <div class="qr">QR</div>
+      <div class="legal">Back Page / Call to Action • Learn more via the Stories button above.</div>
+      <div class="footer-qr">
+        <div class="qr" aria-label="QR code placeholder">QR</div>
+      </div>
     </footer>
   </div>
 </body>
