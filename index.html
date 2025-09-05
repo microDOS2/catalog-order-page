@@ -62,6 +62,7 @@
                     <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">microDOS<span class="gradient-text">(2)</span></h1>
                 </a>
                 <p class="text-lg text-gray-500">Wholesale Partner Program</p>
+                <p class="text-md text-gray-500 mt-1"><a href="tel:7024215202" class="hover:underline">702.421.5202</a></p>
             </div>
             <div class="mt-6 sm:mt-0">
                 <a href="https://microdos2.github.io/SINGLE-LOCATION/" target="_blank">
@@ -182,37 +183,38 @@
             <!-- Order Details -->
             <section class="mt-12">
                  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      <div>
+                       <div>
                          <h3 class="text-xl font-semibold text-gray-800 mb-4">Billing & Shipping Information</h3>
                          <div class="space-y-4">
-                               <div>
-                                   <label for="company-name" class="block text-sm font-medium text-gray-600">Company Name:</label>
-                                   <input type="text" id="company-name" class="mt-1 w-full p-2 border rounded-md">
-                               </div>
-                               <div>
-                                   <label for="contact-name" class="block text-sm font-medium text-gray-600">Contact Name:</label>
-                                   <input type="text" id="contact-name" class="mt-1 w-full p-2 border rounded-md">
-                               </div>
-                               <div>
-                                   <label for="shipping-address" class="block text-sm font-medium text-gray-600">Shipping Address:</label>
-                                   <textarea id="shipping-address" class="mt-1 w-full p-2 border rounded-md h-20"></textarea>
-                               </div>
-                               <div>
-                                   <label for="phone-number" class="block text-sm font-medium text-gray-600">Phone Number:</label>
-                                   <input type="tel" id="phone-number" class="mt-1 w-full p-2 border rounded-md">
-                               </div>
-                               <div>
-                                   <label for="email" class="block text-sm font-medium text-gray-600">Email:</label>
-                                   <input type="email" id="email" class="mt-1 w-full p-2 border rounded-md">
-                               </div>
+                                 <div>
+                                     <label for="company-name" class="block text-sm font-medium text-gray-600">Company Name:</label>
+                                     <input type="text" id="company-name" class="mt-1 w-full p-2 border rounded-md">
+                                 </div>
+                                 <div>
+                                     <label for="contact-name" class="block text-sm font-medium text-gray-600">Contact Name:</label>
+                                     <input type="text" id="contact-name" class="mt-1 w-full p-2 border rounded-md">
+                                 </div>
+                                 <div>
+                                     <label for="shipping-address" class="block text-sm font-medium text-gray-600">Shipping Address:</label>
+                                     <textarea id="shipping-address" class="mt-1 w-full p-2 border rounded-md h-20"></textarea>
+                                 </div>
+                                 <div>
+                                     <label for="phone-number" class="block text-sm font-medium text-gray-600">Phone Number:</label>
+                                     <input type="tel" id="phone-number" class="mt-1 w-full p-2 border rounded-md">
+                                 </div>
+                                 <div>
+                                     <label for="email" class="block text-sm font-medium text-gray-600">Email:</label>
+                                     <input type="email" id="email" class="mt-1 w-full p-2 border rounded-md">
+                                 </div>
                          </div>
-                      </div>
+                       </div>
                        <div>
                          <h3 class="text-xl font-semibold text-gray-800 mb-4">Order Notes</h3>
                          <textarea id="order-notes" class="w-full h-48 p-2 border rounded-md"></textarea>
                          <button id="email-order-btn-bottom" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition w-full mt-4 no-print">
                             Email Order
                          </button>
+                         <div id="validation-message-bottom" class="text-center text-red-500 font-medium mt-2 hidden no-print"></div>
                      </div>
                  </div>
             </section>
@@ -224,7 +226,7 @@
             <div class="text-xs text-gray-500 bg-yellow-50 border border-yellow-200 p-3 rounded-lg mb-4">
                 <strong>Important Safety Notice:</strong> Overconsumption may cause intense visuals and hallucinations. Intended for adults 21+. Use responsibly. Statements not evaluated by the FDA. This product is not intended to diagnose, treat, cure, or prevent any disease.
             </div>
-            <p class="text-gray-600">For more <a href="https://microdos2.github.io/SINGLE-LOCATION/" target="_blank" class="text-indigo-600 hover:underline">information</a> or to order online, visit: <strong><a href="https://microdos2.github.io/catalog-order-page/" target="_blank" class="text-indigo-600 hover:underline">https://microdos2.github.io/catalog-order-page/</a></strong></p>
+            <p class="text-gray-600">For more <a href="https://microdos2.github.io/SINGLE-LOCATION/" target="_blank" class="text-indigo-600 hover:underline">information</a>, call <a href="tel:7024215202" class="text-indigo-600 hover:underline font-medium">702.421.5202</a>. To order online, visit: <strong><a href="https://microdos2.github.io/catalog-order-page/" target="_blank" class="text-indigo-600 hover:underline">https://microdos2.github.io/catalog-order-page/</a></strong></p>
         </footer>
 
     </div>
@@ -237,6 +239,7 @@
             const emailOrderBtn = document.getElementById('email-order-btn');
             const emailOrderBtnBottom = document.getElementById('email-order-btn-bottom');
             const validationMessage = document.getElementById('validation-message');
+            const validationMessageBottom = document.getElementById('validation-message-bottom');
 
             const companyNameInput = document.getElementById('company-name');
             const contactNameInput = document.getElementById('contact-name');
@@ -271,11 +274,15 @@
                 const email = emailInput.value.trim();
 
                 if (!companyName || !contactName || !phoneNumber || !email) {
-                    validationMessage.textContent = 'Please fill out Company Name, Contact Name, Phone Number, and Email before proceeding.';
+                    const msg = 'Please fill out Company Name, Contact Name, Phone Number, and Email before proceeding.';
+                    validationMessage.textContent = msg;
+                    validationMessageBottom.textContent = msg;
                     validationMessage.classList.remove('hidden');
+                    validationMessageBottom.classList.remove('hidden');
                     return;
                 }
                 validationMessage.classList.add('hidden');
+                validationMessageBottom.classList.add('hidden');
 
                 let emailBody = 'New Wholesale Order Details:\n\n';
                 emailBody += '--- CONTACT INFORMATION ---\n';
@@ -308,7 +315,7 @@
                 emailBody += `Grand Total: ${grandTotalCell.textContent}\n`;
 
                 const subject = `New Wholesale Order from ${companyName}`;
-                const mailtoLink = `mailto:microdostoo@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+                const mailtoLink = `mailto:microdos2u@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
                 
                 window.location.href = mailtoLink;
             }
@@ -329,5 +336,7 @@
 
 </body>
 </html>
+
+
 
 
