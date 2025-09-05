@@ -58,23 +58,32 @@
         <!-- Header -->
         <header class="flex flex-col sm:flex-row justify-between items-center mb-10 border-b pb-6">
             <div class="text-center sm:text-left">
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">microDOS<span class="gradient-text">(2)</span></h1>
+                <a href="https://microdos2.github.io/SINGLE-LOCATION/" target="_blank">
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">microDOS<span class="gradient-text">(2)</span></h1>
+                </a>
                 <p class="text-lg text-gray-500">Wholesale Partner Program</p>
             </div>
             <div class="mt-6 sm:mt-0">
-                <!-- Image path updated to work with GitHub pages structure -->
-                <img src="ASSETS/microDOS2pill.png" 
-                     alt="microDOS(2) Product Image" 
-                     class="w-32 h-32 rounded-lg shadow-md"
-                     onerror="this.onerror=null;this.src='https://placehold.co/120x120/cccccc/ffffff?text=Img';">
+                <a href="https://microdos2.github.io/SINGLE-LOCATION/" target="_blank">
+                    <!-- Image path updated to work with GitHub pages structure -->
+                    <img src="ASSETS/microDOS2pill.png" 
+                         alt="microDOS(2) Product Image" 
+                         class="w-32 h-32 rounded-lg shadow-md"
+                         onerror="this.onerror=null;this.src='https://placehold.co/128x128/6366f1/ffffff?text=microDOS(2)';">
+                </a>
             </div>
         </header>
 
-        <div class="mb-8 text-center no-print">
+        <div class="mb-2 text-center no-print space-x-4">
             <button onclick="window.print()" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-indigo-700 transition">
                 Print Order Sheet
             </button>
+            <button id="email-order-btn" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition">
+                Email Order
+            </button>
         </div>
+        <div id="validation-message" class="text-center text-red-500 font-medium mb-8 hidden no-print"></div>
+
 
         <!-- Main Content: Order Form -->
         <main>
@@ -176,31 +185,34 @@
                       <div>
                          <h3 class="text-xl font-semibold text-gray-800 mb-4">Billing & Shipping Information</h3>
                          <div class="space-y-4">
-                              <div>
+                               <div>
                                    <label for="company-name" class="block text-sm font-medium text-gray-600">Company Name:</label>
                                    <input type="text" id="company-name" class="mt-1 w-full p-2 border rounded-md">
-                              </div>
-                              <div>
+                               </div>
+                               <div>
                                    <label for="contact-name" class="block text-sm font-medium text-gray-600">Contact Name:</label>
                                    <input type="text" id="contact-name" class="mt-1 w-full p-2 border rounded-md">
-                              </div>
-                              <div>
+                               </div>
+                               <div>
                                    <label for="shipping-address" class="block text-sm font-medium text-gray-600">Shipping Address:</label>
                                    <textarea id="shipping-address" class="mt-1 w-full p-2 border rounded-md h-20"></textarea>
-                              </div>
-                              <div>
+                               </div>
+                               <div>
                                    <label for="phone-number" class="block text-sm font-medium text-gray-600">Phone Number:</label>
                                    <input type="tel" id="phone-number" class="mt-1 w-full p-2 border rounded-md">
-                              </div>
-                              <div>
+                               </div>
+                               <div>
                                    <label for="email" class="block text-sm font-medium text-gray-600">Email:</label>
                                    <input type="email" id="email" class="mt-1 w-full p-2 border rounded-md">
-                              </div>
+                               </div>
                          </div>
                       </div>
                        <div>
                          <h3 class="text-xl font-semibold text-gray-800 mb-4">Order Notes</h3>
                          <textarea id="order-notes" class="w-full h-48 p-2 border rounded-md"></textarea>
+                         <button id="email-order-btn-bottom" class="bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition w-full mt-4 no-print">
+                            Email Order
+                         </button>
                      </div>
                  </div>
             </section>
@@ -212,7 +224,7 @@
             <div class="text-xs text-gray-500 bg-yellow-50 border border-yellow-200 p-3 rounded-lg mb-4">
                 <strong>Important Safety Notice:</strong> Overconsumption may cause intense visuals and hallucinations. Intended for adults 21+. Use responsibly. Statements not evaluated by the FDA. This product is not intended to diagnose, treat, cure, or prevent any disease.
             </div>
-            <p class="text-gray-600">For more information or to order online, visit: <strong><a href="https://microdos2.github.io/SINGLE-LOCATION/" target="_blank" class="text-indigo-600 hover:underline">https://microdos2.github.io/SINGLE-LOCATION/</a></strong></p>
+            <p class="text-gray-600">For more <a href="https://microdos2.github.io/SINGLE-LOCATION/" target="_blank" class="text-indigo-600 hover:underline">information</a> or to order online, visit: <strong><a href="https://microdos2.github.io/catalog-order-page/" target="_blank" class="text-indigo-600 hover:underline">https://microdos2.github.io/catalog-order-page/</a></strong></p>
         </footer>
 
     </div>
@@ -222,23 +234,26 @@
             const orderTable = document.getElementById('order-table');
             const grandTotalCell = document.getElementById('grand-total');
             const productRows = orderTable.querySelectorAll('.product-row');
+            const emailOrderBtn = document.getElementById('email-order-btn');
+            const emailOrderBtnBottom = document.getElementById('email-order-btn-bottom');
+            const validationMessage = document.getElementById('validation-message');
+
+            const companyNameInput = document.getElementById('company-name');
+            const contactNameInput = document.getElementById('contact-name');
+            const phoneNumberInput = document.getElementById('phone-number');
+            const emailInput = document.getElementById('email');
 
             function updateTotals() {
                 let grandTotal = 0;
-
                 productRows.forEach(row => {
                     const price = parseFloat(row.dataset.price);
                     const quantityInput = row.querySelector('.qty-input');
                     const lineTotalCell = row.querySelector('.line-total');
-                    
                     const quantity = parseInt(quantityInput.value) || 0;
-                    
                     const lineTotal = price * quantity;
                     grandTotal += lineTotal;
-
                     lineTotalCell.textContent = formatCurrency(lineTotal);
                 });
-
                 grandTotalCell.textContent = formatCurrency(grandTotal);
             }
 
@@ -249,11 +264,63 @@
                 }).format(amount);
             }
 
+            function handleEmailOrder() {
+                const companyName = companyNameInput.value.trim();
+                const contactName = contactNameInput.value.trim();
+                const phoneNumber = phoneNumberInput.value.trim();
+                const email = emailInput.value.trim();
+
+                if (!companyName || !contactName || !phoneNumber || !email) {
+                    validationMessage.textContent = 'Please fill out Company Name, Contact Name, Phone Number, and Email before proceeding.';
+                    validationMessage.classList.remove('hidden');
+                    return;
+                }
+                validationMessage.classList.add('hidden');
+
+                let emailBody = 'New Wholesale Order Details:\n\n';
+                emailBody += '--- CONTACT INFORMATION ---\n';
+                emailBody += `Company Name: ${companyName}\n`;
+                emailBody += `Contact Name: ${contactName}\n`;
+                emailBody += `Phone Number: ${phoneNumber}\n`;
+                emailBody += `Email: ${email}\n`;
+                emailBody += `Shipping Address: ${document.getElementById('shipping-address').value.trim()}\n\n`;
+                
+                emailBody += '--- ORDER SUMMARY ---\n';
+                let hasItems = false;
+                productRows.forEach(row => {
+                    const quantity = parseInt(row.querySelector('.qty-input').value) || 0;
+                    if (quantity > 0) {
+                        hasItems = true;
+                        const productName = row.querySelector('td:first-child p:first-child').textContent;
+                        emailBody += `${productName}: ${quantity} case(s)\n`;
+                    }
+                });
+
+                if (!hasItems){
+                    emailBody += 'No items were added to the order.\n';
+                }
+
+                emailBody += '\n--- NOTES ---\n';
+                const notes = document.getElementById('order-notes').value.trim();
+                emailBody += `${notes || 'No notes provided.'}\n\n`;
+
+                emailBody += `--- TOTAL ---\n`;
+                emailBody += `Grand Total: ${grandTotalCell.textContent}\n`;
+
+                const subject = `New Wholesale Order from ${companyName}`;
+                const mailtoLink = `mailto:microdostoo@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+                
+                window.location.href = mailtoLink;
+            }
+
             orderTable.addEventListener('input', function(event) {
                 if (event.target.classList.contains('qty-input')) {
                     updateTotals();
                 }
             });
+
+            emailOrderBtn.addEventListener('click', handleEmailOrder);
+            emailOrderBtnBottom.addEventListener('click', handleEmailOrder);
 
             // Initial calculation on page load
             updateTotals();
@@ -262,3 +329,5 @@
 
 </body>
 </html>
+
+
